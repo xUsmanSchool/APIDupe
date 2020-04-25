@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Usman\\source\\repos\\UsmanShaniAPI\\UsmanShaniAPI\\UsmanShaniAPI.csproj": {}
+    "C:\\Users\\Usman\\Documents\\School 1EA\\cloud api\\CloudAPIUsman\\UsmanShaniAPI\\UsmanShaniAPI\\UsmanShaniAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Usman\\source\\repos\\UsmanShaniAPI\\UsmanShaniAPI\\UsmanShaniAPI.csproj": {
+    "C:\\Users\\Usman\\Documents\\School 1EA\\cloud api\\CloudAPIUsman\\UsmanShaniAPI\\UsmanShaniAPI\\UsmanShaniAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usman\\source\\repos\\UsmanShaniAPI\\UsmanShaniAPI\\UsmanShaniAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Usman\\Documents\\School 1EA\\cloud api\\CloudAPIUsman\\UsmanShaniAPI\\UsmanShaniAPI\\UsmanShaniAPI.csproj",
         "projectName": "UsmanShaniAPI",
-        "projectPath": "C:\\Users\\Usman\\source\\repos\\UsmanShaniAPI\\UsmanShaniAPI\\UsmanShaniAPI.csproj",
+        "projectPath": "C:\\Users\\Usman\\Documents\\School 1EA\\cloud api\\CloudAPIUsman\\UsmanShaniAPI\\UsmanShaniAPI\\UsmanShaniAPI.csproj",
         "packagesPath": "C:\\Users\\Usman\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usman\\source\\repos\\UsmanShaniAPI\\UsmanShaniAPI\\obj\\",
+        "outputPath": "C:\\Users\\Usman\\Documents\\School 1EA\\cloud api\\CloudAPIUsman\\UsmanShaniAPI\\UsmanShaniAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -40,6 +40,34 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.1.3, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[3.1.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.1, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
