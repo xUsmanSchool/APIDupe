@@ -10,7 +10,7 @@ using UsmanShaniAPI.Model;
 
 namespace UsmanShaniAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class MoviesController : ControllerBase
     {

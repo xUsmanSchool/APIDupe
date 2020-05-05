@@ -9,8 +9,8 @@ namespace UsmanShaniAPI.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public DateTime ReleaseDate { get; set; }
-        public string Genre { get; set; }
+        public int ReleaseYear { get; set; }
+        public ICollection<Genre> Genre { get; set; }
         public int Length { get; set; }
         public int Rating { get; set; }
         public IList<MovieActors> MovieActors { get; set; }

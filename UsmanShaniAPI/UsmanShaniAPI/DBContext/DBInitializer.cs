@@ -16,7 +16,6 @@ namespace UsmanShaniAPI.DBContext
             {
                 var NewActor = new Actor()
                 {
-                    //Id = 0,
                     Name = "Reeves",
                     FirstName = "Keanu",
                     Age = 54,
@@ -24,6 +23,19 @@ namespace UsmanShaniAPI.DBContext
                     PlaceOfBirth = "Beiroet, Libanon"
                 };
                 context.Actors.Add(NewActor);
+                context.SaveChanges();
+            }
+
+            if (!context.Movies.Any())
+            {
+                var NewMovie = new Movie()
+                {
+                    Name = "John Wick",
+                    ReleaseYear = 2014,
+                    Length = 101,
+                    Rating = 72
+                };
+                context.Movies.Add(NewMovie);
                 context.SaveChanges();
             }
         }

@@ -21,14 +21,47 @@ namespace UsmanShaniAPI.Controllers
             _context = context;
         }
 
-        // GET: api/Actors
+        // GET: /Actors
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Actor>>> GetActors()
+        public async Task<ActionResult<IEnumerable<Actor>>> GetActors(string name, string firstName, string sort, int? page, int length = 5, string dir = "asc")
         {
-            return await _context.Actors.ToListAsync();
+            IQueryable<Actor> query = _context.Actors;
+
+            if (!string.IsNullOrWhiteSpace(name))
+                query = query.Where(a => a.Name == name);
+
+            if (!string.IsNullOrWhiteSpace(firstName))
+                query = query.Where(a => a.FirstName == firstName);
+
+            if (!string.IsNullOrWhiteSpace(sort))
+            {
+                switch (sort)
+                {
+                    case "name":
+                        if (dir == "asc")
+                            query = query.OrderBy(a => a.Name);
+                        else if (dir == "desc")
+                            query = query.OrderByDescending(a => a.Name);
+                        break;
+                    case "firstName":
+                        if (dir == "asc")
+                            query = query.OrderBy(a => a.FirstName);
+                        else if (dir == "desc")
+                            query = query.OrderByDescending(a => a.FirstName);
+                        break;
+                }
+            }
+
+            if (page.HasValue)
+            {
+                query = query.Skip(page.Value * length);
+            }
+            query = query.Take(length);
+
+            return query.ToList();
         }
 
-        // GET: api/Actors/5
+        // GET: /Actors/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Actor>> GetActor(int id)
         {
@@ -42,9 +75,8 @@ namespace UsmanShaniAPI.Controllers
             return actor;
         }
 
-        // PUT: api/Actors/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
+        // PUT: /Actors/5
+       
         [HttpPut("{id}")]
         public async Task<IActionResult> PutActor(int id, Actor actor)
         {
@@ -74,9 +106,7 @@ namespace UsmanShaniAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Actors
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
+        // POST: /Actors
         [HttpPost]
         public async Task<ActionResult<Actor>> PostActor(Actor actor)
         {
@@ -86,7 +116,7 @@ namespace UsmanShaniAPI.Controllers
             return CreatedAtAction("GetActor", new { id = actor.Id }, actor);
         }
 
-        // DELETE: api/Actors/5
+        // DELETE: /Actors/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Actor>> DeleteActor(int id)
         {
