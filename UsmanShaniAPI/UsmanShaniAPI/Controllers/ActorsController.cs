@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UsmanShaniAPI.DBContext;
 using UsmanShaniAPI.Model;
+using System.Web.Http.Cors;
 
 namespace UsmanShaniAPI.Controllers
 {
@@ -108,7 +109,7 @@ namespace UsmanShaniAPI.Controllers
 
         // POST: /Actors
         [HttpPost]
-        public async Task<ActionResult<Actor>> PostActor(Actor actor)
+        public async Task<ActionResult<Actor>> PostActor([FromBody]Actor actor)
         {
             _context.Actors.Add(actor);
             await _context.SaveChangesAsync();

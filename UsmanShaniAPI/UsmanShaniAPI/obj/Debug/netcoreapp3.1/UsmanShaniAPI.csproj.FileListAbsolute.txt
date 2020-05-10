@@ -143,4 +143,8 @@ C:\Users\Usman\Documents\School 1EA\cloud api\CloudAPIUsman\UsmanShaniAPI\UsmanS
 C:\Users\Usman\Documents\School 1EA\cloud api\CloudAPIUsman\UsmanShaniAPI\UsmanShaniAPI\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\Usman\Documents\School 1EA\cloud api\CloudAPIUsman\UsmanShaniAPI\UsmanShaniAPI\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\Usman\Documents\School 1EA\cloud api\CloudAPIUsman\UsmanShaniAPI\UsmanShaniAPI\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\Usman\Documents\School 1EA\cloud api\CloudAPIUsman\UsmanShaniAPI\UsmanShaniAPI\bin\Debug\netcoreapp3.1\System.Web.Cors.dll
+C:\Users\Usman\Documents\School 1EA\cloud api\CloudAPIUsman\UsmanShaniAPI\UsmanShaniAPI\bin\Debug\netcoreapp3.1\System.Net.Http.Formatting.dll
+C:\Users\Usman\Documents\School 1EA\cloud api\CloudAPIUsman\UsmanShaniAPI\UsmanShaniAPI\bin\Debug\netcoreapp3.1\System.Web.Http.dll
+C:\Users\Usman\Documents\School 1EA\cloud api\CloudAPIUsman\UsmanShaniAPI\UsmanShaniAPI\bin\Debug\netcoreapp3.1\System.Web.Http.Cors.dll
 C:\Users\Usman\Documents\School 1EA\cloud api\CloudAPIUsman\UsmanShaniAPI\UsmanShaniAPI\obj\Debug\netcoreapp3.1\UsmanShaniAPI.MvcApplicationPartsAssemblyInfo.cache
