@@ -14,5 +14,9 @@
     <WebStackScaffolding_LayoutPageFile />
     <WebStackScaffolding_DbContextTypeFullName>UsmanShaniAPI.DBContext.CollectionContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
+    <GoogleCloudPublishConfiguration>Debug</GoogleCloudPublishConfiguration>
+    <GoogleAppEnginePublishPromote>True</GoogleAppEnginePublishPromote>
+    <GoogleAppEnginePublishOpenWebsite>True</GoogleAppEnginePublishOpenWebsite>
+    <GoogleCloudPublishChoice>Gae</GoogleCloudPublishChoice>
   </PropertyGroup>
 </Project>

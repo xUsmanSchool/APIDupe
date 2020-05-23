@@ -1,0 +1,55 @@
+<body>
+    <h2>Add Director</h2>
+        <table>
+            <tr>
+              <th>Label</th>
+              <th>Value</th>
+              <th>Validation</th>
+          </tr>
+          <tr>
+            <td>Name</td>
+            <td><input type="text" [(ngModel)]="postDir.name"></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>First Name</td>
+            <td><input type="text" [(ngModel)]="postDir.firstName"></td>
+            <td></td>
+          </tr>
+        </table>
+        <button (click)="AddDirector()">ADD</button>
+    <hr>
+    <h2>Edit Director</h2>
+    <select name="directors" [(ngModel)]="selectedDirectorEdit" >
+        <option value="{{director.id}}" *ngFor="let director of directorList">{{director.firstname}} {{director.name}}</option>
+    </select>
+    <br><br>
+    <form action="">
+        <table>
+            <tr>
+              <th>Label</th>
+              <th>Value</th>
+              <th>Validation</th>
+            </tr>
+            <tr>
+              <td>Name</td>
+              <td><input type="text"></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>First Name</td>
+              <td><input type="text"></td>
+              <td></td>
+            </tr>
+            
+          </table>
+    </form>
+    <hr>
+    <h2>Remove Director</h2>
+    <select name="directors" [(ngModel)]="selectedDirectorDelete" >
+        <option value="{{director.id}}" *ngFor="let director of directorList">{{director.firstname}} {{director.name}}</option>
+    </select>
+    <br><br>
+    <button (click)="RemoveDirector()">Remove</button>
+    <hr>
+    </body>

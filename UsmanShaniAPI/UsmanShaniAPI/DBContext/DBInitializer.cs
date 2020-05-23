@@ -12,6 +12,18 @@ namespace UsmanShaniAPI.DBContext
         {
             context.Database.EnsureCreated();
 
+            var NewDirector = new Director()
+            {
+                Name = "Stahelski",
+                FirstName = "Chad"
+            };
+
+            if (!context.Director.Any())
+            {
+                context.Director.Add(NewDirector);
+                context.SaveChanges();
+            }
+
             if (!context.Actors.Any())
             {
                 var NewActor = new Actor()
@@ -34,21 +46,14 @@ namespace UsmanShaniAPI.DBContext
                     Name = "John Wick",
                     ReleaseYear = 2014,
                     Length = 101,
-                    Rating = 72
+                    Rating = 72,
+                    Director = NewDirector
                 };
                 context.Movies.Add(NewMovie);
                 context.SaveChanges();
             }
 
-            //if (!context.Genre.Any())
-            //{
-            //    var NewGenre = new Genre()
-            //    {
-            //        Name = "Action"
-            //    };
-            //    context.Genre.Add(NewGenre);
-            //    context.SaveChanges();
-            //}
+            
         }
     }
 }

@@ -10,11 +10,15 @@ export class ApiService {
   APIUrl: string = "localhost:5001";
 
   GetAllActors() {
-    return this.http.get<[IActor]>(`https://localhost:5001/actors`);
+    return this.http.get<[IActor]>(`https://${this.APIUrl}/actors`);
   }
 
   GetAllMovies() {
     return this.http.get<[IMovie]>(`http://${this.APIUrl}/movies`);
+  }
+
+  GetAllDirectors() {
+    return this.http.get<[IDirector]>(`http://${this.APIUrl}/directors`);
   }
 
   PostActor(actorBody){
@@ -27,7 +31,36 @@ export class ApiService {
       imageUrl: actorBody.imageUrl,
        
     }
-    return this.http.post<IActor>(`https://localhost:5001/actors`, body, {
+    return this.http.post<IActor>(`https://${this.APIUrl}/actors`, body, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  PostDirector(dirBody){
+    var body = {
+      name: dirBody.name,
+      firstName: dirBody.firstName
+    }
+    return this.http.post<IDirector>(`https://${this.APIUrl}/directors`, body, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  UpdateActor(actorBody){
+    var body = {
+      name: actorBody.name,
+      firstName: actorBody.firstName,
+      age: actorBody.age,
+      dateOfBirth: actorBody.dateOfBirth,
+      placeOfBirth: actorBody.placeOfBirth,
+      imageUrl: actorBody.imageUrl,
+       
+    }
+    return this.http.put<IActor>(`https://${this.APIUrl}/actors`, body, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
@@ -35,7 +68,11 @@ export class ApiService {
   }
 
   DeleteActor(id){
-    return this.http.delete<IActor>(`https://localhost:5001/actors/${id}`);
+    return this.http.delete<IActor>(`https://${this.APIUrl}/actors/${id}`);
+  }
+
+  DeleteDirector(id){
+    return this.http.delete<IDirector>(`https://${this.APIUrl}/directors/${id}`);
   }
 }
 
@@ -58,4 +95,10 @@ export interface IMovie {
   length: number;
   rating: number;
   movieActors?: any;
+}
+
+export interface IDirector {
+  directorID: number;
+  name: string;
+  firstName: string;
 }

@@ -22,3 +22,6 @@
     text-align: center;
     font-weight: bold;
   }
+  li {
+    float: left;
+  }

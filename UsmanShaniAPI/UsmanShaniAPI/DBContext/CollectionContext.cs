@@ -27,18 +27,13 @@ namespace UsmanShaniAPI.DBContext
             modelBuilder.Entity<MovieActors>()
                 .HasOne(movieActors => movieActors.Actor)
                 .WithMany(ma => ma.MovieActors)
-                .HasForeignKey(fk => fk.ActorId);
-
-            modelBuilder.Entity<Genre>()
-                .HasOne<Movie>(g => g.Movie)
-                .WithMany(m => m.Genre)
-                .HasForeignKey(fk => fk.GenreId);
+                .HasForeignKey(fk => fk.ActorId);                
         }
 
         public DbSet<Actor> Actors { get; set; }
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<Director> Director { get; set; }
         public DbSet<MovieActors> MovieActors { get; set; }
-        public DbSet<UsmanShaniAPI.Model.Genre> Genre { get; set; }
 
     }
 }

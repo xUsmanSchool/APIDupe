@@ -148,3 +148,5 @@ C:\Users\Usman\Documents\School 1EA\cloud api\CloudAPIUsman\UsmanShaniAPI\UsmanS
 C:\Users\Usman\Documents\School 1EA\cloud api\CloudAPIUsman\UsmanShaniAPI\UsmanShaniAPI\bin\Debug\netcoreapp3.1\System.Web.Http.dll
 C:\Users\Usman\Documents\School 1EA\cloud api\CloudAPIUsman\UsmanShaniAPI\UsmanShaniAPI\bin\Debug\netcoreapp3.1\System.Web.Http.Cors.dll
 C:\Users\Usman\Documents\School 1EA\cloud api\CloudAPIUsman\UsmanShaniAPI\UsmanShaniAPI\obj\Debug\netcoreapp3.1\UsmanShaniAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Usman\Documents\School 1EA\cloud api\CloudAPIUsman\UsmanShaniAPI\UsmanShaniAPI\obj\Debug\netcoreapp3.1\UsmanShaniAPI.csproj.CoreCompileInputs.cache
+C:\Users\Usman\Documents\School 1EA\cloud api\CloudAPIUsman\UsmanShaniAPI\UsmanShaniAPI\obj\Debug\netcoreapp3.1\UsmanShaniAPI.genruntimeconfig.cache

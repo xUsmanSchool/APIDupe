@@ -23,9 +23,44 @@ namespace UsmanShaniAPI.Controllers
 
         // GET: api/Movies
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
+        public async Task<ActionResult<IEnumerable<Movie>>> GetMovies(string name, string releaseYear, string sort, int? page, int length = 5, string dir = "asc")
         {
-            return await _context.Movies.ToListAsync();
+            IQueryable<Movie> query = _context.Movies;
+
+            if (!string.IsNullOrWhiteSpace(name))
+                query = query.Where(a => a.Name == name);
+
+            if (!string.IsNullOrWhiteSpace(releaseYear))
+                query = query.Where(a => a.ReleaseYear == Convert.ToInt32(releaseYear));
+
+            if (!string.IsNullOrWhiteSpace(sort))
+            {
+                switch (sort)
+                {
+                    case "name":
+                        if (dir == "asc")
+                            query = query.OrderBy(a => a.Name);
+                        else if (dir == "desc")
+                            query = query.OrderByDescending(a => a.Name);
+                        break;
+                    case "releaseYear":
+                        if (dir == "asc")
+                            query = query.OrderBy(a => a.ReleaseYear);
+                        else if (dir == "desc")
+                            query = query.OrderByDescending(a => a.ReleaseYear);
+                        break;
+                }
+            }
+
+            if (page.HasValue)
+            {
+                query = query.Skip(page.Value * length);
+            }
+            query = query.Take(length);
+
+            return await query.Include(d => d.Director)
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         // GET: api/Movies/5
