@@ -1,0 +1,1126 @@
+<nav
+  class="navbar navbar-expand-lg fixed-top bg-warning"
+  color-on-scroll="100"
+  id="navbar-top"
+>
+<div class="container">
+    <div class="navbar-translate">
+      <a
+        class="navbar-brand"
+        placement="bottom"
+        [routerLink]="['/main']"
+        target="_blank"
+        tooltip="Go to the main page"
+      >
+        <span> Usman Shani •</span> API Client
+      </a>
+      <button
+        aria-controls="navigation-index"
+        aria-label="Toggle navigation"
+        class="navbar-toggler navbar-toggler"
+        [attr.aria-expanded]="!isCollapsed"
+        (click)="isCollapsed = !isCollapsed"
+        id="navigation"
+        type="button"
+      >
+        <span class="navbar-toggler-bar bar1"> </span>
+        <span class="navbar-toggler-bar bar2"> </span>
+        <span class="navbar-toggler-bar bar3"> </span>
+      </button>
+    </div>
+    <div
+      class="navbar-collapse justify-content-end"
+      [collapse]="isCollapsed"
+      id="navigation"
+    >
+      <div class="navbar-collapse-header">
+        <div class="row">
+          <div class="col-6 collapse-brand"><a><span> Usman Shani •</span> API Client</a></div>
+          <div class="col-6 collapse-close text-right">
+            <button
+              aria-controls="navigation-index"
+              aria-label="Toggle navigation"
+              class="navbar-toggler"
+              [attr.aria-expanded]="!isCollapsed"
+              (click)="isCollapsed = !isCollapsed"
+              id="navigation"
+              type="button"
+            >
+              <i class="tim-icons icon-simple-remove"> </i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <ul class="navbar-nav">
+        <li class="dropdown nav-item" dropdown>
+          <a
+            class="dropdown-toggle nav-link dropdown-toggle"
+            data-toggle="dropdown"
+            dropdownToggle
+            href="javascript:void(0)"
+          >
+            <i class="fa fa-cogs d-lg-none d-xl-none"> </i> Getting started
+          </a>
+          <div class="dropdown-menu dropdown-with-icons" *dropdownMenu>
+            <a
+              class="dropdown-item"
+              href="https://github.com/xUsmanSchool/CloudAPIUsman"
+            >
+              <i class="tim-icons icon-paper"> </i> READ ME
+            </a>
+            <a class="dropdown-item" [routerLink]="['/edit']">
+              <i class="tim-icons icon-bullet-list-67"> </i> Edit
+            </a>
+            <a class="dropdown-item" [routerLink]="['/tableview']">
+              <i class="tim-icons icon-image-02"> </i> Table View
+            </a>
+          </div>
+        </li>
+        <li class="nav-item">
+            <div *ngIf="auth.user$ | async; then authenticated else guest">
+            </div>
+            
+          <ng-template #guest class="center">
+            <a
+                class="nav-link btn btn-default d-none d-lg-block"
+                href="javascript:void(0)"
+                (click)="auth.googleSignin()"
+            >
+            <img src="assets/img/google.svg" height="20px"/>  Log in
+            </a>
+          </ng-template>
+        
+        <ng-template #authenticated>
+            <div class="block" *ngIf="auth.user$ | async as user">
+                <a
+            class="nav-link btn btn-default d-none d-lg-block"
+            href="javascript:void(0)"
+            (click)="auth.signOut()"
+          >
+            <i class="tim-icons icon-cloud-download-93"> </i> Log out
+          </a>
+            </div>
+        </ng-template>
+        </li>
+        <li>
+            <div class="block" *ngIf="auth.user$ | async as user">
+                <img height="35px"  [src]="user.photoURL" tooltip="{{user.uid}}">
+            </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="space-70"></div>
+<div class="space-70"></div>
+<div class="wrapper">
+  <div class="page-header header-filter">
+    <div class="container">
+        <div class="content-center brand">
+        <div *ngIf="auth.user$ | async; then name else noName"></div>
+        <ng-template #name>
+            <div *ngIf="auth.user$ | async as user">
+              <div class="wrapper">
+                <div class="container">
+                    <h3>Edit Movies</h3>
+                    <div class=" btn-group" dropdown *ngIf="movieList">
+                        <button class=" btn btn-warning" type="button">
+                          Select movie
+                        </button>
+                        <button aria-expanded="false"
+                            aria-haspopup="true" 
+                            class=" btn btn-warning dropdown-toggle dropdown-toggle-split" 
+                            data-toggle="dropdown" 
+                            dropdownToggle type="button" 
+                            id="dropdownMenuLink">
+                          <span class=" sr-only">
+                            Toggle Dropdown
+                          </span>
+                        </button>
+                        <div class=" dropdown-menu" *dropdownMenu aria-labelledby="dropdownMenuLink">
+                            <div *ngFor="let movie of movieList">
+                                <a class="dropdown-item" href="javascript:void(0)" (click)="FindEditMovie(movie.id)" (click)="myModal9.show()">
+                                  {{movie.name}}
+                                </a>
+                                <div class=" dropdown-divider">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <button
+                      class="btn btn-info btn-tooltip"
+                      data-target="#myModal2"
+                      (click)="myModal7.show()"
+                      placement="right"
+                      tooltip="Press to add a movie to the API"
+                    >
+                      Add movie
+                    </button>
+                </div>
+                <div class="space-70"></div>
+                <div class="container">
+                    <h3>Edit Actors</h3>
+                    <div class=" btn-group" dropdown *ngIf="actorList">
+                        <button class=" btn btn-warning" type="button">
+                          Select actor
+                        </button>
+                        <button aria-expanded="false"
+                            aria-haspopup="true" 
+                            class=" btn btn-warning dropdown-toggle dropdown-toggle-split" 
+                            data-toggle="dropdown" 
+                            dropdownToggle type="button" 
+                            id="dropdownMenuLink">
+                          <span class=" sr-only">
+                            Toggle Dropdown
+                          </span>
+                        </button>
+                        <div class=" dropdown-menu" *dropdownMenu aria-labelledby="dropdownMenuLink">
+                            <div *ngFor="let actor of actorList">
+                                <a class="dropdown-item" href="javascript:void(0)" (click)="FindEditActor(actor.id)" (click)="myModal6.show()">
+                                    {{actor.firstName}} {{actor.name}}
+                                </a>
+                                <div class=" dropdown-divider">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <button
+                          class="btn btn-info btn-tooltip"
+                          data-target="#myModal2"
+                          (click)="myModal4.show()"
+                          placement="right"
+                          tooltip="Press to add an actor to the API"
+                        >
+                          Add Actor
+                        </button>
+                </div>
+                <div class="space-70"></div>
+                <div class="container">
+                  <h3>Edit Directors</h3>
+                  <div class=" btn-group" dropdown *ngIf="directorList">
+                    <button class=" btn btn-warning" type="button">
+                      select director
+                    </button>
+                    <button aria-expanded="false" aria-haspopup="true" class=" btn btn-warning dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" dropdownToggle type="button" id="dropdownMenuLink">
+                      <span class=" sr-only">
+                        Toggle Dropdown
+                      </span>
+                    </button>
+                    <div class=" dropdown-menu" *dropdownMenu aria-labelledby="dropdownMenuLink">
+                        <div *ngFor="let director of directorList">
+                            <a class="dropdown-item" href="javascript:void(0)" (click)="FindEditDirector(director.directorID)" (click)="myModal3.show()">
+                                {{director.firstName}} {{director.name}}
+                            </a>
+                            <div class=" dropdown-divider">
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+                  <button
+                    class="btn btn-info btn-tooltip"
+                    data-target="#myModal2"
+                    (click)="myModal2.show()"
+                    placement="right"
+                    tooltip="Press to add a director to the API"
+                  >
+                    Add director
+                  </button>
+                </div>
+            </div>
+            <div class="space-70"></div>
+            
+            <!--ALERTS-->
+            <div *ngIf="directorPostSuccess">
+              <alert [type]="'success'">
+                This is a success alert-check it out!
+              </alert>
+            </div>
+            </div>
+        </ng-template>
+        <ng-template #noName>
+            <h1 class="h1-seo"> Welcome Guest </h1>
+            <h3>
+                Please log in to continue
+            </h3>
+        </ng-template>
+        </div>
+    </div>
+</div>
+<div class="space-70"></div>
+<div class="space-70"></div>
+<div class="space-70"></div>
+<div class="space-70"></div>
+
+
+<!--MODALS-->
+
+<!--modal movie add-->
+<div
+  aria-hidden="true"
+  aria-labelledby="myModalLabel"
+  bsModal
+  class="modal fade modal-black"
+  #myModal7="bs-modal"
+  id="myModal7"
+  role="dialog"
+  tabindex="-1"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center">
+        <button
+          aria-hidden="true"
+          class="close"
+          data-dismiss="modal"
+          (click)="myModal7.hide()"
+          type="button"
+        >
+          <i class="tim-icons icon-simple-remove text-white"> </i>
+        </button>
+        <div class="text-muted text-center ml-auto mr-auto">
+          <h3 class="mb-0">Add Movie</h3>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="text-center text-muted mb-4 mt-3">
+          <small>Enter the movie's info here</small>
+        </div>
+        <form role="form">
+          <div class="form-group mb-3">
+            <div
+              class="input-group input-group-alternative"
+              [ngClass]="{ 'input-group-focus': focus1 === true }"
+            >
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="tim-icons icon-caps-small"> </i>
+                </span>
+              </div>
+              <input
+                #inMName
+                class="form-control"
+                placeholder="Name"
+                name="name"
+                type="text"
+                (focus)="focus1 = true"
+                (blur)="focus1 = false"
+                [(ngModel)]="postMovie.name"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div
+              class="input-group input-group-alternative"
+              [ngClass]="{ 'input-group-focus': focus2 === true }"
+            >
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="tim-icons icon-calendar-60"> </i>
+                </span>
+              </div>
+              <input
+                #inMRelease
+                class="form-control"
+                placeholder="Realease year"
+                name="Realease"
+                type="text"
+                (focus)="focus2 = true"
+                (blur)="focus2 = false"
+                [(ngModel)]="postMovie.releaseYear"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div
+              class="input-group input-group-alternative"
+              [ngClass]="{ 'input-group-focus': focus6 === true }"
+            >
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="tim-icons icon-watch-time"> </i>
+                </span>
+              </div>
+              <input
+                #inMLength
+                class="form-control"
+                placeholder="Length in minutes"
+                name="Realease"
+                type="text"
+                (focus)="focus6 = true"
+                (blur)="focus6 = false"
+                [(ngModel)]="postMovie.length"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div
+              class="input-group input-group-alternative"
+              [ngClass]="{ 'input-group-focus': focus3 === true }"
+            >
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="tim-icons icon-heart-2"> </i>
+                </span>
+              </div>
+              <input
+                #inMRating
+                class="form-control"
+                placeholder="Rating"
+                name="Rating"
+                type="text"
+                (focus)="focus3 = true"
+                (blur)="focus3 = false"
+                [(ngModel)]="postMovie.rating"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="btn-group" dropdown *ngIf="directorList">
+              <button class="btn btn-secondary btn-sm" type="button">
+                <div *ngIf="postMovie.director.name">
+                    {{postMovie.director.firstName}} {{this.postMovie.director.name}}
+                </div>
+                <div *ngIf='postMovie.director.name == ""'>
+                  Directed by
+                </div>
+              </button>
+              <button aria-expanded="false" aria-haspopup="true" class=" btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" dropdownToggle type="button" id="dropdownMenuLink">
+                <span class=" sr-only">
+                  Toggle Dropdown
+                </span>
+              </button>
+              <div class=" dropdown-menu" *dropdownMenu aria-labelledby="dropdownMenuLink">
+                  <div *ngFor="let director of directorList">
+                      <a class="dropdown-item" href="javascript:void(0)" (click)="SetDirectorForMovie(director.directorID, director.name, director.firstName)">
+                          {{director.firstName}} {{director.name}}
+                      </a>
+                      <div class=" dropdown-divider">
+                      </div>
+                  </div>
+              </div>
+          </div>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-primary my-4" type="button" (click)="AddMovie(inMName.value, inMRelease.value, inMLength.value, inMRating.value)">
+              Add
+            </button>
+            <div *ngIf="AMalert">
+              <alert [type]="'danger'">
+                  All fields have to be filled in!
+              </alert>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal movie edit-->
+<div
+  aria-hidden="true"
+  aria-labelledby="myModalLabel"
+  bsModal
+  class="modal fade modal-black"
+  #myModal9="bs-modal"
+  id="myModal9"
+  role="dialog"
+  tabindex="-1"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center">
+        <button
+          aria-hidden="true"
+          class="close"
+          data-dismiss="modal"
+          (click)="myModal9.hide()"
+          type="button"
+        >
+          <i class="tim-icons icon-simple-remove text-white"> </i>
+        </button>
+        <div class="text-muted text-center ml-auto mr-auto">
+          <h3 class="mb-0">Edit Movie</h3>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="text-center text-muted mb-4 mt-3">
+          <small>Edit the movies's info here</small>
+        </div>
+        <form role="form">
+          <div class="form-group mb-3">
+            <div
+              class="input-group input-group-alternative"
+              [ngClass]="{ 'input-group-focus': focus1 === true }"
+            >
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="tim-icons icon-caps-small"> </i>
+                </span>
+              </div>
+              <input
+                #inMName
+                class="form-control"
+                placeholder="Name"
+                name="name"
+                type="text"
+                (focus)="focus1 = true"
+                (blur)="focus1 = false"
+                [(ngModel)]="editMovie.name"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div
+              class="input-group input-group-alternative"
+              [ngClass]="{ 'input-group-focus': focus2 === true }"
+            >
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="tim-icons icon-calendar-60"> </i>
+                </span>
+              </div>
+              <input
+                #inMRelease
+                class="form-control"
+                placeholder="Realease year"
+                name="Realease"
+                type="text"
+                (focus)="focus2 = true"
+                (blur)="focus2 = false"
+                [(ngModel)]="editMovie.releaseYear"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div
+              class="input-group input-group-alternative"
+              [ngClass]="{ 'input-group-focus': focus6 === true }"
+            >
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="tim-icons icon-watch-time"> </i>
+                </span>
+              </div>
+              <input
+                #inMLength
+                class="form-control"
+                placeholder="Length in minutes"
+                name="Realease"
+                type="text"
+                (focus)="focus6 = true"
+                (blur)="focus6 = false"
+                [(ngModel)]="editMovie.length"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div
+              class="input-group input-group-alternative"
+              [ngClass]="{ 'input-group-focus': focus3 === true }"
+            >
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="tim-icons icon-heart-2"> </i>
+                </span>
+              </div>
+              <input
+                #inMRating
+                class="form-control"
+                placeholder="Rating"
+                name="Rating"
+                type="text"
+                (focus)="focus3 = true"
+                (blur)="focus3 = false"
+                [(ngModel)]="editMovie.rating"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </div>
+          <div class="text-center modal-footer">
+            <button class="btn btn-danger" type="button" (click)="RemoveMovie()">
+              Delete
+            </button>  
+            <button class="btn btn-primary" type="button" (click)="EditMovie()">
+              Save info
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--modal actor add-->
+<div
+  aria-hidden="true"
+  aria-labelledby="myModalLabel"
+  bsModal
+  class="modal fade modal-black"
+  #myModal4="bs-modal"
+  id="myModal4"
+  role="dialog"
+  tabindex="-1"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center">
+        <button
+          aria-hidden="true"
+          class="close"
+          data-dismiss="modal"
+          (click)="myModal4.hide()"
+          type="button"
+        >
+          <i class="tim-icons icon-simple-remove text-white"> </i>
+        </button>
+        <div class="text-muted text-center ml-auto mr-auto">
+          <h3 class="mb-0">Add Actor</h3>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="text-center text-muted mb-4 mt-3">
+          <small>Enter the actor's info here</small>
+        </div>
+        <form role="form">
+          <div class="form-group mb-3">
+            <div
+              class="input-group input-group-alternative"
+              [ngClass]="{ 'input-group-focus': focus1 === true }"
+            >
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="tim-icons icon-caps-small"> </i>
+                </span>
+              </div>
+              <input
+                #inAName
+                class="form-control"
+                placeholder="Name"
+                name="name"
+                type="text"
+                (focus)="focus1 = true"
+                (blur)="focus1 = false"
+                [(ngModel)]="postActor.name"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div
+              class="input-group input-group-alternative"
+              [ngClass]="{ 'input-group-focus': focus2 === true }"
+            >
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="tim-icons icon-caps-small"> </i>
+                </span>
+              </div>
+              <input
+                #inAFirstname
+                class="form-control"
+                placeholder="Firstname"
+                name="firstname"
+                type="text"
+                (focus)="focus2 = true"
+                (blur)="focus2 = false"
+                [(ngModel)]="postActor.firstName"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div
+              class="input-group input-group-alternative"
+              [ngClass]="{ 'input-group-focus': focus3 === true }"
+            >
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="tim-icons icon-single-02"> </i>
+                </span>
+              </div>
+              <input
+                #inAAge
+                class="form-control"
+                placeholder="Age"
+                name="Age"
+                type="text"
+                (focus)="focus3 = true"
+                (blur)="focus3 = false"
+                [(ngModel)]="postActor.age"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div
+              class="input-group input-group-alternative"
+              [ngClass]="{ 'input-group-focus': focus4 === true }"
+            >
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="tim-icons icon-calendar-60"> </i>
+                </span>
+              </div>
+                <input
+                  #inADate
+                  bsDatepicker
+                  class="form-control"
+                  data-datepicker-color="danger"
+                  [bsConfig]="{ isAnimated: true, containerClass: 'theme-red' }"
+                  [bsValue]=""
+                  id="datepicker"
+                  type="text"
+                  placeholder="Date of birth"
+                  [(ngModel)]="postActor.dateOfBirth"
+                  [ngModelOptions]="{standalone: true}"
+                  (focus)="focus4 = true"
+                  (blur)="focus4 = false"
+                />
+            </div>
+          </div>
+          <div class="form-group">
+            <div
+              class="input-group input-group-alternative"
+              [ngClass]="{ 'input-group-focus': focus5 === true }"
+            >
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="tim-icons icon-pin"></i>
+                </span>
+              </div>
+              <input
+                #inAPlace
+                class="form-control"
+                placeholder="Place of birth"
+                name="Place of birth"
+                type="text"
+                (focus)="focus5 = true"
+                (blur)="focus5 = false"
+                [(ngModel)]="postActor.placeOfBirth"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div
+              class="input-group input-group-alternative"
+              [ngClass]="{ 'input-group-focus': focus6 === true }"
+            >
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="tim-icons icon-image-02"> </i>
+                </span>
+              </div>
+              <input
+                #inAImage
+                class="form-control"
+                placeholder="Image url"
+                name="Place of birth"
+                type="text"
+                (focus)="focus6 = true"
+                (blur)="focus6 = false"
+                [(ngModel)]="postActor.imageUrl"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-primary my-4" type="button" (click)="AddActor(inAName.value, inAFirstname.value, 
+            inAAge.value, inADate.value, inAPlace.value, inAImage.value)">
+              Add
+            </button>
+            <div *ngIf="ACalert">
+              <alert [type]="'danger'">
+                  All fields have to be filled in!
+              </alert>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal actor edit-->
+<div
+  aria-hidden="true"
+  aria-labelledby="myModalLabel"
+  bsModal
+  class="modal fade modal-black"
+  #myModal6="bs-modal"
+  id="myModal6"
+  role="dialog"
+  tabindex="-1"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center">
+        <button
+          aria-hidden="true"
+          class="close"
+          data-dismiss="modal"
+          (click)="myModal6.hide()"
+          type="button"
+        >
+          <i class="tim-icons icon-simple-remove text-white"> </i>
+        </button>
+        <div class="text-muted text-center ml-auto mr-auto">
+          <h3 class="mb-0">Edit Actor</h3>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="text-center text-muted mb-4 mt-3">
+          <small>Edit the actor's info here</small>
+        </div>
+        <form role="form">
+          <div class="form-group mb-3">
+            <div
+              class="input-group input-group-alternative"
+              [ngClass]="{ 'input-group-focus': focus1 === true }"
+            >
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="tim-icons icon-caps-small"> </i>
+                </span>
+              </div>
+              <input
+                #inAName
+                class="form-control"
+                placeholder="Name"
+                name="name"
+                type="text"
+                (focus)="focus1 = true"
+                (blur)="focus1 = false"
+                [(ngModel)]="editActor.name"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div
+              class="input-group input-group-alternative"
+              [ngClass]="{ 'input-group-focus': focus2 === true }"
+            >
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="tim-icons icon-caps-small"> </i>
+                </span>
+              </div>
+              <input
+                #inAFirstname
+                class="form-control"
+                placeholder="Firstname"
+                name="firstname"
+                type="text"
+                (focus)="focus2 = true"
+                (blur)="focus2 = false"
+                [(ngModel)]="editActor.firstName"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div
+              class="input-group input-group-alternative"
+              [ngClass]="{ 'input-group-focus': focus3 === true }"
+            >
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="tim-icons icon-single-02"> </i>
+                </span>
+              </div>
+              <input
+                #inAAge
+                class="form-control"
+                placeholder="Age"
+                name="Age"
+                type="text"
+                (focus)="focus3 = true"
+                (blur)="focus3 = false"
+                [(ngModel)]="editActor.age"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div
+              class="input-group input-group-alternative"
+              [ngClass]="{ 'input-group-focus': focus4 === true }"
+            >
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="tim-icons icon-calendar-60"> </i>
+                </span>
+              </div>
+              <input
+                #inADate
+                class="form-control"
+                placeholder="Date of birth"
+                name="Date of birth"
+                type="text"
+                (focus)="focus4 = true"
+                (blur)="focus4 = false"
+                ngModel="{{editActor.dateOfBirth}}"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div
+              class="input-group input-group-alternative"
+              [ngClass]="{ 'input-group-focus': focus5 === true }"
+            >
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="tim-icons icon-pin"> </i>
+                </span>
+              </div>
+              <input
+                #inAPlace
+                class="form-control"
+                placeholder="Place of birth"
+                name="Place of birth"
+                type="text"
+                (focus)="focus5 = true"
+                (blur)="focus5 = false"
+                [(ngModel)]="editActor.placeOfBirth"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div
+              class="input-group input-group-alternative"
+              [ngClass]="{ 'input-group-focus': focus6 === true }"
+            >
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="tim-icons icon-image-02"> </i>
+                </span>
+              </div>
+              <input
+                #inAImage
+                class="form-control"
+                placeholder="Image url"
+                name="Place of birth"
+                type="text"
+                (focus)="focus6 = true"
+                (blur)="focus6 = false"
+                [(ngModel)]="editActor.imageUrl"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </div>
+          <div class="text-center modal-footer">
+            <button class="btn btn-danger" type="button" (click)="RemoveActor()">
+              Delete
+            </button>  
+            <button class="btn btn-primary" type="button" (click)="EditActor()">
+              Save info
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal dir add-->
+<div
+  aria-hidden="true"
+  aria-labelledby="myModalLabel"
+  bsModal
+  class="modal fade modal-black"
+  #myModal2="bs-modal"
+  id="myModal2"
+  role="dialog"
+  tabindex="-1"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center">
+        <button
+          aria-hidden="true"
+          class="close"
+          data-dismiss="modal"
+          (click)="myModal2.hide()"
+          type="button"
+        >
+          <i class="tim-icons icon-simple-remove text-white"> </i>
+        </button>
+        <div class="text-muted text-center ml-auto mr-auto">
+          <h3 class="mb-0">Add director</h3>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="text-center text-muted mb-4 mt-3">
+          <small>Enter the director's name and firstname here</small>
+        </div>
+        <form role="form">
+          <div class="form-group mb-3">
+            <div
+              class="input-group input-group-alternative"
+              [ngClass]="{ 'input-group-focus': focus1 === true }"
+            >
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="tim-icons icon-caps-small"> </i>
+                </span>
+              </div>
+              <input
+                #inName
+                class="form-control"
+                placeholder="Name"
+                name="name"
+                type="text"
+                (focus)="focus1 = true"
+                (blur)="focus1 = false"
+                [(ngModel)]="postDirector.name"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div
+              class="input-group input-group-alternative"
+              [ngClass]="{ 'input-group-focus': focus2 === true }"
+            >
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="tim-icons icon-caps-small"> </i>
+                </span>
+              </div>
+              <input
+                #inFirstname
+                class="form-control"
+                placeholder="Firstname"
+                name="firstname"
+                type="text"
+                (focus)="focus2 = true"
+                (blur)="focus2 = false"
+                [(ngModel)]="postDirector.firstName"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-primary my-4" type="button" (click)="AddDirector(inName.value, inFirstname.value)">
+              Add
+            </button>
+            <div *ngIf="ADalert">
+              <alert [type]="'danger'">
+                  All fields have to be filled in!
+              </alert>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal dir edit-->
+<div
+  aria-hidden="true"
+  aria-labelledby="myModalLabel"
+  bsModal
+  class="modal fade modal-black"
+  #myModal3="bs-modal"
+  id="myModal3"
+  role="dialog"
+  tabindex="-1"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center">
+        <button
+          aria-hidden="true"
+          class="close"
+          data-dismiss="modal"
+          (click)="myModal3.hide()"
+          type="button"
+        >
+          <i class="tim-icons icon-simple-remove text-white"> </i>
+        </button>
+        <div class="text-muted text-center ml-auto mr-auto">
+          <h3 class="mb-0">Edit director</h3>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="text-center text-muted mb-4 mt-3">
+          <small>Edit the director's name and firstname here</small>
+        </div>
+        <form role="form">
+          <div class="form-group mb-3">
+            <div
+              class="input-group input-group-alternative"
+              [ngClass]="{ 'input-group-focus': focus1 === true }"
+            >
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="tim-icons icon-caps-small"> </i>
+                </span>
+              </div>
+              <input
+                #inName
+                class="form-control"
+                placeholder="Name"
+                name="name"
+                type="text"
+                (focus)="focus1 = true"
+                (blur)="focus1 = false"
+                [(ngModel)]="editDirector.name"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div
+              class="input-group input-group-alternative"
+              [ngClass]="{ 'input-group-focus': focus2 === true }"
+            >
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="tim-icons icon-caps-small"> </i>
+                </span>
+              </div>
+              <input
+                #inFirstname
+                class="form-control"
+                placeholder="Firstname"
+                name="firstname"
+                type="text"
+                (focus)="focus2 = true"
+                (blur)="focus2 = false"
+                [(ngModel)]="editDirector.firstName"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </div>
+          <div class="text-center modal-footer">
+            <button class="btn btn-danger" type="button" (click)="RemoveDirector()">
+              Delete
+            </button>  
+            <button class="btn btn-primary" type="button" (click)="EditDirector()">
+              Save info
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

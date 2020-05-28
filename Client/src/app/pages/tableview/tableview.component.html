@@ -1,0 +1,159 @@
+<nav
+  class="navbar navbar-expand-lg fixed-top bg-primary"
+  color-on-scroll="100"
+  id="navbar-top"
+>
+<div class="container">
+    <div class="navbar-translate">
+      <a
+        class="navbar-brand"
+        placement="bottom"
+        [routerLink]="['/home']"
+        target="_blank"
+        tooltip="Go to the main page"
+      >
+        <span> Usman Shani •</span> API Client
+      </a>
+      <button
+        aria-controls="navigation-index"
+        aria-label="Toggle navigation"
+        class="navbar-toggler navbar-toggler"
+        [attr.aria-expanded]="!isCollapsed"
+        (click)="isCollapsed = !isCollapsed"
+        id="navigation"
+        type="button"
+      >
+        <span class="navbar-toggler-bar bar1"> </span>
+        <span class="navbar-toggler-bar bar2"> </span>
+        <span class="navbar-toggler-bar bar3"> </span>
+      </button>
+    </div>
+    <div
+      class="navbar-collapse justify-content-end"
+      [collapse]="isCollapsed"
+      id="navigation"
+    >
+      <div class="navbar-collapse-header">
+        <div class="row">
+          <div class="col-6 collapse-brand"><a> BLK• </a></div>
+          <div class="col-6 collapse-close text-right">
+            <button
+              aria-controls="navigation-index"
+              aria-label="Toggle navigation"
+              class="navbar-toggler"
+              [attr.aria-expanded]="!isCollapsed"
+              (click)="isCollapsed = !isCollapsed"
+              id="navigation"
+              type="button"
+            >
+              <i class="tim-icons icon-simple-remove"> </i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <ul class="navbar-nav">
+        <li class="dropdown nav-item" dropdown>
+          <a
+            class="dropdown-toggle nav-link dropdown-toggle"
+            data-toggle="dropdown"
+            dropdownToggle
+            href="javascript:void(0)"
+          >
+            <i class="fa fa-cogs d-lg-none d-xl-none"> </i> Getting started
+          </a>
+          <div class="dropdown-menu dropdown-with-icons" *dropdownMenu>
+            <a
+              class="dropdown-item"
+              href="https://github.com/xUsmanSchool/CloudAPIUsman"
+            >
+              <i class="tim-icons icon-paper"> </i> READ ME
+            </a>
+            <a class="dropdown-item" [routerLink]="['/edit']">
+              <i class="tim-icons icon-bullet-list-67"> </i> Edit
+            </a>
+            <a class="dropdown-item" [routerLink]="['/tableview']">
+              <i class="tim-icons icon-image-02"> </i> Table View
+            </a>
+          </div>
+        </li>
+        <li class="nav-item">
+            <div *ngIf="auth.user$ | async; then authenticated else guest">
+            </div>
+            
+          <ng-template #guest class="center">
+            <a
+                class="nav-link btn btn-default d-none d-lg-block"
+                href="javascript:void(0)"
+                (click)="auth.googleSignin()"
+            >
+            <img src="assets/img/google.svg" height="20px"/>  Log in
+            </a>
+          </ng-template>
+        
+        <ng-template #authenticated>
+            <div class="block" *ngIf="auth.user$ | async as user">
+                <a
+            class="nav-link btn btn-default d-none d-lg-block"
+            href="javascript:void(0)"
+            (click)="auth.signOut()"
+          >
+            <i class="tim-icons icon-cloud-download-93"> </i> Log out
+          </a>
+            </div>
+        </ng-template>
+        </li>
+        <li>
+            <div class="block" *ngIf="auth.user$ | async as user">
+                <img height="35px"  [src]="user.photoURL" tooltip="{{user.uid}}">
+            </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="space-70"></div>
+<div class="space-70"></div>
+<div class="wrapper">
+    <div class="container">
+        <h3>Movies Table View</h3>
+        <div class="row">
+          <div class="col-md-12">
+            <h4>Filter  </h4>
+            <button type="button" class="btn btn-primary mr-1" (click)="SortAsc()">Name</button>
+            <button type="button" class="btn btn-primary mr-1" (click)="SortDesc()">Release Year</button>
+            <h4>Sort  </h4>
+            <button type="button" class="btn btn-info mr-1" (click)="SortAsc()">ASC</button>
+            <button type="button" class="btn btn-info mr-1" (click)="SortDesc()">DESC</button>
+          </div>
+        </div>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th>Name</th>
+                    <th>Release Year</th>
+                    <th>Length</th>
+                    <th>Rating</th>
+                    <th>Director</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let movie of movieList">
+                    <td class="text-center">{{movie.id}}</td>
+                    <td>{{movie.name}}</td>
+                    <td>{{movie.releaseYear}}</td>
+                    <td>{{movie.length}}m</td>
+                    <td>{{movie.rating}}/100</td>
+                    <td>{{movie.director.firstName}} {{movie.director.name}}</td>
+                    <td class="td-actions text-right">
+                        <button type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" (click)="RemoveMovie(movie.id)">
+                            <i class="tim-icons icon-simple-remove"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
