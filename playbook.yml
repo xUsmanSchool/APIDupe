@@ -1,0 +1,118 @@
+- hosts: all
+  remote_user: root
+  tasks:
+  - name: Update apt-get
+    apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+
+  - name: Upgrade apt-get
+    apt: upgrade=dist force_apt_get=yes
+
+  - name: Install apache2
+    apt: 
+      name: apache2
+      update_cache: yes
+      state: latest
+
+  - name: Install git
+    apt: 
+      name: git
+      state: present
+
+  - name: Delete apiproject directory
+    file:
+      path: /apiproject
+      state: absent
+
+  - name: Creates apiproject directory
+    file: 
+      path: /apiproject
+      state: directory
+
+  - name: Clone repo to folder
+    git:
+      repo: https://github.com/xUsmanSchool/APIDupe.git
+      dest: /apiproject
+    register: git_finished
+
+  - name: Get Node from url
+    get_url: url=https://deb.nodesource.com/setup_14.x dest=/opt mode=755
+
+  - name: Configure Node
+    command: /opt/setup_14.x
+
+  - name: Install Node.js with apt
+    apt: 
+      name: nodejs 
+      state: present
+
+  - name: Running NPM install
+    npm: 
+      path: /apiproject/Client
+    register: npm_finished
+    when: git_finished.changed
+    
+  - name: Running NPM build
+    command: npm run build
+    args:
+      chdir: /apiproject/Client
+
+  - name: Delete apache's html folder
+    file:
+      path: /var/www/html
+      state: absent
+
+  - name: Copy dist to apache root dir
+    command:
+      cmd: mv /apiproject/Client/dist /var/www/html
+
+  - name: Restart service apache2
+    command:
+      cmd: service apache2 restart
+
+  - name: enabled mod_rewrite
+    apache2_module: 
+      name: rewrite 
+      state: present
+    notify:
+      - restart apache2
+
+  - name: Download MS product repository
+    get_url:
+      url: https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb
+      dest: /tmp/packages-microsoft-prod.deb
+
+  - name: Install MS product repository
+    apt: deb=/tmp/packages-microsoft-prod.deb
+
+  - name: Make sure HTTPS is supported by apt
+    apt:
+      name: apt-transport-https
+      state: present
+      update_cache: no
+
+  - name: Install .NET Core SDK
+    apt:
+      name: dotnet-sdk-3.1
+      state: present
+      update_cache: yes
+
+  - name: Running DOTNET restore
+    command:
+      cmd: dotnet restore /apiproject/UsmanShaniAPI/UsmanShaniAPI/UsmanShaniAPI.csproj
+
+  - name: Running DOTNET build
+    command:
+      cmd: dotnet build /apiproject/UsmanShaniAPI/UsmanShaniAPI/UsmanShaniAPI.csproj
+
+  - name: Install Screen
+    apt:
+      name: screen
+      state: latest
+
+  - name: Running DOTNET run 
+    command:
+      cmd: screen -d -m dotnet run --project /apiproject/UsmanShaniAPI/UsmanShaniAPI/UsmanShaniAPI.csproj
+
+  handlers:
+    - name: restart apache2
+      service: name=apache2 state=restarted
